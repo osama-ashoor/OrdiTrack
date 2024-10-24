@@ -1,24 +1,17 @@
 import 'package:b2b/Search.dart';
 import 'package:b2b/auth/AuthService.dart';
 import 'package:b2b/auth/wrapper.dart';
-import 'package:b2b/cart.dart';
 import 'package:b2b/databaseService/database.dart';
-import 'package:b2b/product.dart';
 import 'package:b2b/screens/HomePage.dart';
 import 'package:b2b/screens/OrdersScreen.dart';
-import 'package:b2b/screens/addProductScreen.dart';
 import 'package:b2b/screens/cartScreen.dart';
 import 'package:b2b/screens/settings.dart';
 import 'package:b2b/screens/wallet.dart';
 import 'package:b2b/shopInfo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class Home extends StatefulWidget {
   @override
