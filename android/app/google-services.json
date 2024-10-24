@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184873604977",
+    "project_id": "b2b-store-9f4f1",
+    "storage_bucket": "b2b-store-9f4f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184873604977:android:5283de19efef10c11448d0",
+        "android_client_info": {
+          "package_name": "com.example.b2b"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA2Q5db04q68RLhQ8_qL9fSQJ5QGt8Lec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
