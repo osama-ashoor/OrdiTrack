@@ -5,6 +5,7 @@ class Product {
   final double buyprice;
   final double sellprice;
   final String imageUrl;
+  String? size;
 
   int getQuntity() {
     return Quntity;
@@ -16,5 +17,6 @@ class Product {
     required this.buyprice,
     required this.sellprice,
     required this.imageUrl,
+    this.size,
   });
 }

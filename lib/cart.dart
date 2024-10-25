@@ -8,18 +8,39 @@ class Cart extends ChangeNotifier {
   static double total = 0.0;
   List<Product> cart = [];
   void addToCart(Product item) {
-    if (checkIfExists(item)) {
-      cart[place].Quntity += 1;
-      notifyListeners();
+    if (item.size == null) {
+      if (checkIfExists(item)) {
+        cart[place].Quntity += 1;
+        notifyListeners();
+      } else {
+        cart.add(item);
+
+        notifyListeners();
+      }
     } else {
-      cart.add(item);
-      notifyListeners();
+      if (checkIfExistsForDuplicate(item) && cart[place].size == item.size) {
+        cart[place].Quntity += 1;
+        notifyListeners();
+      } else {
+        cart.add(item);
+        notifyListeners();
+      }
     }
   }
 
   bool checkIfExists(Product item) {
     for (int i = 0; i < cart.length; i++) {
       if (cart[i].code == item.code) {
+        place = i;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool checkIfExistsForDuplicate(Product item) {
+    for (int i = 0; i < cart.length; i++) {
+      if (cart[i].code == item.code && cart[i].size == item.size) {
         place = i;
         return true;
       }

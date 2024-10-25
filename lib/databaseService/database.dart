@@ -124,17 +124,19 @@ class Database {
       "location": location,
     });
     for (int i = 0; i < cartItems.length; i++) {
+      String itemNumber = await getItemsCount(orderNumber);
       await Users.doc(_auth.currentUser!.uid)
           .collection("orders")
           .doc(orderNumber)
           .collection("items")
-          .doc(cartItems[i].code)
+          .doc(cartItems[i].code + "$itemNumber")
           .set({
         "name": cartItems[i].name,
         "Sellprice": cartItems[i].sellprice,
         "Buyprice": cartItems[i].buyprice,
         "Quntity": cartItems[i].Quntity,
         "image": cartItems[i].imageUrl,
+        "size": cartItems[i].size != null ? cartItems[i].size : null,
       });
     }
   }
@@ -310,6 +312,19 @@ class Database {
     } else {
       return (int.parse(snapshot.docs[snapshot.docs.length - 1].id) + 1)
           .toString();
+    }
+  }
+
+  Future<String> getItemsCount(String orderNumber) async {
+    QuerySnapshot snapshot = await Users.doc(_auth.currentUser!.uid)
+        .collection("orders")
+        .doc(orderNumber)
+        .collection("items")
+        .get();
+    if (snapshot.docs.length == 0) {
+      return "0";
+    } else {
+      return snapshot.docs.length.toString();
     }
   }
 

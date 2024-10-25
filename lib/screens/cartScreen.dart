@@ -467,7 +467,6 @@ class _CartScreen extends State<CartScreen> {
                               borderRadius: BorderRadius.circular(8),
                               color: Theme.of(context).colorScheme.secondary,
                             ),
-                            height: 195,
                             child: Column(
                               children: [
                                 ListTile(
@@ -523,55 +522,62 @@ class _CartScreen extends State<CartScreen> {
                                       ),
                                     ),
                                   ),
-                                  subtitle: Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(0.4), // Shadow color
-                                          spreadRadius: 2, // Spread radius
-                                          blurRadius: 6, // Blur radius
-                                          offset: Offset(0,
-                                              2), // Changes position of shadow (x, y)
+                                  subtitle: UnconstrainedBox(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 35.0, top: 7),
+                                      child: Container(
+                                        width: 145,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(15),
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    child: ListTile(
-                                      leading: IconButton(
-                                        icon: Icon(Icons.add),
-                                        onPressed: () {
-                                          setState(() {
-                                            value.addToCart(value.cart[index]);
-                                          });
-                                        },
-                                      ),
-                                      title: AutoSizeText(
-                                        minFontSize: 16,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.fade, //
-                                        value.cart[index].Quntity.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.bebasNeue(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.add),
+                                              onPressed: () {
+                                                setState(() {
+                                                  value.addToCart(
+                                                      value.cart[index]);
+                                                });
+                                              },
+                                            ),
+                                            AutoSizeText(
+                                              minFontSize: 16,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.fade, //
+                                              value.cart[index].Quntity
+                                                  .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.bebasNeue(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                if (value.cart[index].Quntity ==
+                                                    1) {
+                                                  setState(() {
+                                                    value.cart.removeAt(index);
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    value.cart[index].Quntity -=
+                                                        1;
+                                                  });
+                                                }
+                                              },
+                                              icon: Icon(Icons.remove),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      trailing: IconButton(
-                                        onPressed: () {
-                                          if (value.cart[index].Quntity == 1) {
-                                            setState(() {
-                                              value.cart.removeAt(index);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              value.cart[index].Quntity -= 1;
-                                            });
-                                          }
-                                        },
-                                        icon: Icon(Icons.remove),
                                       ),
                                     ),
                                   ),
@@ -579,8 +585,52 @@ class _CartScreen extends State<CartScreen> {
                                 SizedBox(height: 10),
                                 // Price Text
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
+                                    value.cart[index].size != null
+                                        ? Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15.0),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.25,
+                                              decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(
+                                                            0.4), // Shadow color
+                                                    spreadRadius:
+                                                        2, // Spread radius
+                                                    blurRadius:
+                                                        6, // Blur radius
+                                                    offset: Offset(0,
+                                                        2), // Changes position of shadow (x, y)
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                    "${value.cart[index].size}",
+                                                    style:
+                                                        GoogleFonts.bebasNeue(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(

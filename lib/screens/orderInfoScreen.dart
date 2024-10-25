@@ -220,7 +220,6 @@ class _orderInfoState extends State<orderInfo> {
                               itemCount: items.length,
                               itemBuilder: (context, index) {
                                 DocumentSnapshot item = items[index];
-                                String id = item.id;
                                 String namee = item.get('name').toString();
                                 String quantityy =
                                     item.get('Quntity').toString();
@@ -237,6 +236,11 @@ class _orderInfoState extends State<orderInfo> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: ListTile(
+                                      trailing: Text(
+                                        item.get("size"),
+                                        style:
+                                            GoogleFonts.bebasNeue(fontSize: 18),
+                                      ),
                                       leading: Container(
                                         width: 65,
                                         child: CachedNetworkImage(

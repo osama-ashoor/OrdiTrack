@@ -1,15 +1,7 @@
-import 'package:b2b/Search.dart';
-import 'package:b2b/auth/AuthService.dart';
-import 'package:b2b/auth/wrapper.dart';
 import 'package:b2b/cart.dart';
 import 'package:b2b/databaseService/database.dart';
 import 'package:b2b/product.dart';
-import 'package:b2b/screens/OrdersScreen.dart';
 import 'package:b2b/screens/addProductScreen.dart';
-import 'package:b2b/screens/cartScreen.dart';
-import 'package:b2b/screens/settings.dart';
-import 'package:b2b/screens/wallet.dart';
-import 'package:b2b/shopInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +33,9 @@ class _HomeState extends State<HomePage> {
   String code = "";
   String buyprice = "0";
   String originalBuyPrice = "0";
+  String size = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
   String shopName = "";
   bool _isDeleting = false;
@@ -698,27 +692,195 @@ class _HomeState extends State<HomePage> {
                                   builder: (context, value, child) =>
                                       IconButton(
                                     onPressed: () {
-                                      value.addToCart(Product(
-                                        code: product['code'],
-                                        name: product['name'],
-                                        buyprice: product['Buyprice'],
-                                        sellprice: product['Sellprice'],
-                                        imageUrl: product['image'],
-                                      ));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          content: Center(
-                                            child: Text(
-                                              'Product Added Successfully To Cart',
-                                              style: GoogleFonts.bebasNeue(
-                                                  fontSize: 18),
-                                            ),
-                                          ),
-                                          backgroundColor: Colors.green,
-                                        ),
-                                      );
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Center(
+                                                  child: Text(
+                                                    'Please Enter The Size Of The Product To Add To Cart',
+                                                    textAlign: TextAlign.center,
+                                                    style:
+                                                        GoogleFonts.bebasNeue(
+                                                            fontSize: 18),
+                                                  ),
+                                                ),
+                                                content: StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) {
+                                                  return SingleChildScrollView(
+                                                    child: Form(
+                                                      key: _formKey2,
+                                                      child: Column(
+                                                        children: [
+                                                          TextFormField(
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return 'Please enter product size';
+                                                              }
+                                                              return null;
+                                                            },
+                                                            onSaved:
+                                                                (newValue) {
+                                                              size = newValue!;
+                                                            },
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              labelText:
+                                                                  'Product Size',
+                                                              labelStyle:
+                                                                  TextStyle(
+                                                                fontSize: 18,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              hintText:
+                                                                  'Enter Product Size',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 18,
+                                                              ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Colors
+                                                                      .black, // Border color when enabled
+                                                                ),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Colors
+                                                                      .green,
+                                                                  width: 2,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    _isDeleting =
+                                                                        false;
+                                                                  });
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                  "Cancel",
+                                                                  style: GoogleFonts
+                                                                      .bebasNeue(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        25,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  setState(() {
+                                                                    _isDeleting =
+                                                                        true;
+                                                                  });
+                                                                  if (_formKey2
+                                                                      .currentState!
+                                                                      .validate()) {
+                                                                    _formKey2
+                                                                        .currentState!
+                                                                        .save();
+                                                                    value.addToCart(
+                                                                        Product(
+                                                                      code: product[
+                                                                          'code'],
+                                                                      name: product[
+                                                                          'name'],
+                                                                      buyprice:
+                                                                          product[
+                                                                              'Buyprice'],
+                                                                      sellprice:
+                                                                          product[
+                                                                              'Sellprice'],
+                                                                      imageUrl:
+                                                                          product[
+                                                                              'image'],
+                                                                      size:
+                                                                          size,
+                                                                    ));
+                                                                    ScaffoldMessenger.of(
+                                                                            context)
+                                                                        .showSnackBar(
+                                                                      SnackBar(
+                                                                        behavior:
+                                                                            SnackBarBehavior.floating,
+                                                                        content:
+                                                                            Center(
+                                                                          child:
+                                                                              Text(
+                                                                            'Product Added Successfully To Cart',
+                                                                            style:
+                                                                                GoogleFonts.bebasNeue(fontSize: 18),
+                                                                          ),
+                                                                        ),
+                                                                        backgroundColor:
+                                                                            Colors.green,
+                                                                      ),
+                                                                    );
+                                                                    setState(
+                                                                        () {
+                                                                      _isDeleting =
+                                                                          false;
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  } else {
+                                                                    setState(
+                                                                        () {
+                                                                      _isDeleting =
+                                                                          false;
+                                                                    });
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    _isDeleting
+                                                                        ? CircularProgressIndicator(
+                                                                            color:
+                                                                                Colors.black)
+                                                                        : Text(
+                                                                            "Add",
+                                                                            style:
+                                                                                GoogleFonts.bebasNeue(
+                                                                              color: Colors.green[600],
+                                                                              fontSize: 25,
+                                                                            ),
+                                                                          ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                              ));
                                     },
                                     icon: Icon(
                                       Icons.add,
