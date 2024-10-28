@@ -250,7 +250,9 @@ class _CartScreen extends State<CartScreen> {
                         // Navigation button
                         Consumer<Cart>(
                           builder: (context, value, child) => isLoading
-                              ? CircularProgressIndicator()
+                              ? CircularProgressIndicator(
+                                  color: Colors.black,
+                                )
                               : ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
@@ -302,7 +304,8 @@ class _CartScreen extends State<CartScreen> {
                                                 child: Text(
                                               'Order Created Successfully',
                                               style: GoogleFonts.bebasNeue(
-                                                  fontSize: 25),
+                                                fontSize: 18,
+                                              ),
                                             )),
                                           ),
                                           backgroundColor: Colors.green,

@@ -122,6 +122,7 @@ class Database {
       "itemsCount": itemsCount,
       "earnedAmount": earnedAmount,
       "location": location,
+      "Date": DateTime.now().toString(),
     });
     for (int i = 0; i < cartItems.length; i++) {
       String itemNumber = await getItemsCount(orderNumber);
@@ -336,7 +337,10 @@ class Database {
   }
 
   Stream<QuerySnapshot> getOrders() {
-    return Users.doc(_auth.currentUser!.uid).collection("orders").snapshots();
+    return Users.doc(_auth.currentUser!.uid)
+        .collection("orders")
+        .orderBy('Date', descending: true)
+        .snapshots();
   }
 
   Future<List<DocumentSnapshot>> accessFieldFromFirstItem(
