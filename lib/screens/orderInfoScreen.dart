@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
 class orderInfo extends StatefulWidget {
   String orderNumber;
@@ -178,12 +179,32 @@ class _orderInfoState extends State<orderInfo> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      child: Column(
                         children: [
-                          Text(
-                            "Order Info",
-                            style: GoogleFonts.bebasNeue(fontSize: 25),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Order Info",
+                                style: GoogleFonts.bebasNeue(fontSize: 25),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                DateFormat('yyyy-MM-dd HH:mm:ss').format(
+                                    DateTime.parse(snapshot.data!.docs[indexx]
+                                            .get("Date")
+                                            .toString())
+                                        .toLocal()),
+                                style: GoogleFonts.bebasNeue(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[900]),
+                              ),
+                            ],
                           ),
                         ],
                       ),

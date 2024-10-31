@@ -2,6 +2,7 @@ import 'package:b2b/databaseService/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class SpentBalance extends StatefulWidget {
   const SpentBalance({super.key});
@@ -161,10 +162,10 @@ class _SpentBalanceState extends State<SpentBalance> {
                         ),
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
-                            horizontal: 2,
+                            horizontal: 5,
                           ),
                           title: Text(
-                            "Withdrawal At ${data.elementAt(index).get("date")}",
+                            "Withdrawal At ${DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.parse(data.elementAt(index).get("date")).toLocal())}",
                             style: GoogleFonts.bebasNeue(
                               fontSize: 18,
                             ),

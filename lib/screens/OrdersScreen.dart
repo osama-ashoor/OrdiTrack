@@ -9,6 +9,7 @@ import 'package:b2b/screens/wallet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key});
@@ -99,17 +100,38 @@ class _OrdersState extends State<Orders> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  subtitle: Text(
-                                    textAlign: TextAlign.start,
-                                    snapshot.data!.docs[index]
-                                        .get("customerName")
-                                        .toString(),
-                                    style: GoogleFonts.bebasNeue(
-                                      fontSize: 18,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .inversePrimary,
-                                    ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        textAlign: TextAlign.start,
+                                        snapshot.data!.docs[index]
+                                            .get("customerName")
+                                            .toString(),
+                                        style: GoogleFonts.bebasNeue(
+                                          fontSize: 18,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inversePrimary,
+                                        ),
+                                      ),
+                                      Text(
+                                        textAlign: TextAlign.start,
+                                        DateFormat('yyyy-MM-dd HH:mm:ss')
+                                            .format(DateTime.parse(snapshot
+                                                    .data!.docs[index]
+                                                    .get("Date")
+                                                    .toString())
+                                                .toLocal()),
+                                        style: GoogleFonts.bebasNeue(
+                                          fontSize: 18,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inversePrimary,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   trailing: Container(
                                     width: 85,
