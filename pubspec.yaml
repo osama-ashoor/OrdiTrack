@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.1.7
   font_awesome_flutter: ^10.4.0
   intl: ^0.18.1
+  flutter_native_splash: ^2.0.6
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
@@ -54,7 +55,13 @@ flutter_icons:
   flutter_lints: ^3.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_native_splash:
+  color: "#808080" # Background color for the splash screen
+  image: lib/assets/shopping-online.png # Path to your splash image
+  android: true # Enable splash for Android
+  ios: true # Enable splash for iOS
+  android_gravity: center # Align image for Android
+  ios_content_mode: scaleAspectFill # Align image for iOS
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -64,9 +71,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+     - lib/assets/shopping-online.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
