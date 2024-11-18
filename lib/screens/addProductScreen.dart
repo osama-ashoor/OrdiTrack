@@ -21,7 +21,9 @@ class _addProductState extends State<addProduct> {
   bool _isAdding = false;
   String name = "";
   String sellprice = "";
+  String percentage = "";
   String code = "";
+  double buyPriceAfterExchange = 0.0;
   String buyprice = "0";
   String originalBuyPrice = "0";
   String _DefaultImageUrl =
@@ -176,46 +178,6 @@ class _addProductState extends State<addProduct> {
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter product name';
-                  }
-                  return null;
-                },
-                onSaved: (newValue) {
-                  name = newValue!;
-                },
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: const InputDecoration(
-                  labelText: 'Product Name',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Enter Product Name',
-                  hintStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black, // Border color when enabled
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.green,
-                      width: 2,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
                     return null;
                   }
                   if (double.tryParse(value) != null) {
@@ -262,7 +224,7 @@ class _addProductState extends State<addProduct> {
                                         currencyExchangeUSA)
                                     .toStringAsFixed(2) +
                                 " LYD")
-                        : ((double.parse(originalBuyPrice) + 6) *
+                        : ((double.parse(originalBuyPrice)) *
                                     currencyExchangeUSA)
                                 .toStringAsFixed(2) +
                             " LYD",
@@ -297,116 +259,208 @@ class _addProductState extends State<addProduct> {
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter product buy price';
-                  }
-                  if (double.tryParse(value) != null) {
-                    return null;
-                  }
-                  if (int.tryParse(value) != null) {
-                    return null;
-                  }
+              _SelectedValue == "TRY"
+                  ? TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product buy price';
+                        }
+                        if (double.tryParse(value) != null) {
+                          return null;
+                        }
+                        if (int.tryParse(value) != null) {
+                          return null;
+                        }
 
-                  return 'Please enter valid product buy price';
-                },
-                onSaved: (newValue) {
-                  buyprice = newValue!;
-                },
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Product Buy Price',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  hintText: originalBuyPrice.isEmpty
-                      ? 'Enter Product Buy Price'
-                      : _SelectedValue == "TRY"
-                          ? (currencyExchangeTRY != 0.0
-                              ? (((double.parse(originalBuyPrice) /
-                                                  currencyExchangeTRY) +
-                                              3) *
-                                          currencyExchangeUSA)
-                                      .toStringAsFixed(2) +
-                                  " LYD"
-                              : (((double.parse(originalBuyPrice) *
-                                                  currencyExchangeTRY) +
-                                              3) *
-                                          currencyExchangeUSA)
-                                      .toStringAsFixed(2) +
-                                  " LYD")
-                          : ((double.parse(originalBuyPrice) + 6) *
-                                      currencyExchangeUSA)
-                                  .toStringAsFixed(2) +
-                              " LYD",
-                  hintStyle: TextStyle(
-                    color: Colors.green,
-                    fontSize: 18,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black, // Border color when enabled
+                        return 'Please enter valid product buy price';
+                      },
+                      onSaved: (newValue) {
+                        buyprice = newValue!;
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Product Buy Price',
+                        labelStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                        hintText: originalBuyPrice.isEmpty
+                            ? 'Enter Product Buy Price'
+                            : _SelectedValue == "TRY"
+                                ? (currencyExchangeTRY != 0.0
+                                    ? (((double.parse(originalBuyPrice) /
+                                                        currencyExchangeTRY) +
+                                                    3) *
+                                                currencyExchangeUSA)
+                                            .toStringAsFixed(2) +
+                                        " LYD"
+                                    : (((double.parse(originalBuyPrice) *
+                                                        currencyExchangeTRY) +
+                                                    3) *
+                                                currencyExchangeUSA)
+                                            .toStringAsFixed(2) +
+                                        " LYD")
+                                : ((double.parse(originalBuyPrice) + 6) *
+                                            currencyExchangeUSA)
+                                        .toStringAsFixed(2) +
+                                    " LYD",
+                        hintStyle: TextStyle(
+                          color: Colors.green,
+                          fontSize: 18,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black, // Border color when enabled
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    )
+                  : TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter percentage %';
+                        }
+                        if (double.tryParse(value) != null) {
+                          return null;
+                        }
+                        if (int.tryParse(value) != null) {
+                          return null;
+                        }
+
+                        return 'Please enter valid percentage %';
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          percentage = value;
+                          if (originalBuyPrice.isNotEmpty) {
+                            if (_SelectedValue == "TRY") {
+                              buyPriceAfterExchange =
+                                  (((double.parse(originalBuyPrice) /
+                                              currencyExchangeTRY) +
+                                          3) *
+                                      currencyExchangeUSA);
+                            } else {
+                              buyPriceAfterExchange =
+                                  ((double.parse(originalBuyPrice)) *
+                                      currencyExchangeUSA);
+                            }
+                          }
+                        });
+                      },
+                      onSaved: (newValue) {
+                        percentage = newValue!;
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'percentage %',
+                        labelStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                        hintText: 'Enter percentage %',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black, // Border color when enabled
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.green,
-                      width: 2,
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter product sell price';
-                  }
-                  if (double.tryParse(value) != null) {
-                    return null;
-                  }
-                  if (int.tryParse(value) != null) {
-                    return null;
-                  }
+              _SelectedValue == "TRY"
+                  ? TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter product sell price';
+                        }
+                        if (double.tryParse(value) != null) {
+                          return null;
+                        }
+                        if (int.tryParse(value) != null) {
+                          return null;
+                        }
 
-                  return 'Please enter valid product sell price';
-                },
-                onSaved: (newValue) {
-                  sellprice = newValue!;
-                },
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: const InputDecoration(
-                  labelText: 'Product Sell Price',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Enter Product Sell Price',
-                  hintStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black, // Border color when enabled
+                        return 'Please enter valid product sell price';
+                      },
+                      onSaved: (newValue) {
+                        sellprice = newValue!;
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'Product Sell Price',
+                        labelStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                        hintText: 'Enter Product Sell Price',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black, // Border color when enabled
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            (percentage == "" || originalBuyPrice == "")
+                                ? "No Price"
+                                : (sellprice = (buyPriceAfterExchange +
+                                            ((buyPriceAfterExchange *
+                                                    double.parse(percentage)) /
+                                                100))
+                                        .toStringAsFixed(2)) +
+                                    " LYD",
+                            style: GoogleFonts.bebasNeue(
+                              fontSize: 19,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.moneyBillAlt,
+                            color: Colors.green,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.green,
-                      width: 2,
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 15,
               ),
@@ -498,6 +552,7 @@ class _addProductState extends State<addProduct> {
                         }
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
+                          buyPriceAfterExchange = 0.0;
                           setState(() {
                             _isAdding = true;
                           });

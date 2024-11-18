@@ -165,7 +165,13 @@ class _SettingsState extends State<SettingsScreen> {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter usa -> LYD exchange rate';
                                   }
-                                  return null;
+                                  if (double.tryParse(value) != null) {
+                                    return null;
+                                  }
+                                  if (int.tryParse(value) != null) {
+                                    return null;
+                                  }
+                                  return 'Please enter valid amount';
                                 },
                                 onSaved: (newValue) {
                                   currencyExchangeUSA = double.parse(newValue!);
@@ -215,7 +221,13 @@ class _SettingsState extends State<SettingsScreen> {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter try -> usa exchange rate';
                                   }
-                                  return null;
+                                  if (double.tryParse(value) != null) {
+                                    return null;
+                                  }
+                                  if (int.tryParse(value) != null) {
+                                    return null;
+                                  }
+                                  return 'Please enter valid amount';
                                 },
                                 onSaved: (newValue) {
                                   currencyExchangeTRY = double.parse(newValue!);
@@ -280,15 +292,7 @@ class _SettingsState extends State<SettingsScreen> {
                                           currencyExchangeUSA,
                                           currencyExchangeTRY);
                                       await setCurrency();
-
                                       if (mounted) {
-                                        setBuilderState(() {
-                                          _isLoading = false;
-                                        });
-                                      }
-
-                                      if (mounted) {
-                                        Navigator.pop(context);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -314,6 +318,10 @@ class _SettingsState extends State<SettingsScreen> {
                                         );
                                       }
                                     }
+                                    setBuilderState(() {
+                                      _isLoading = false;
+                                      Navigator.pop(context);
+                                    });
                                   },
                                   child: Text(
                                     'Save',

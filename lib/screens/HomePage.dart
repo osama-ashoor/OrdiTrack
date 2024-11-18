@@ -633,22 +633,12 @@ class _HomeState extends State<HomePage> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          // Product Name
-                          FittedBox(
-                            child: Text(
-                              product['name'],
-                              style: GoogleFonts.bebasNeue(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           // Product Code
                           Text(
                             product['code'],
                             style: GoogleFonts.bebasNeue(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w300,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(height: 5),
