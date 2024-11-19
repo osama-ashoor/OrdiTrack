@@ -132,7 +132,7 @@ class Database {
           .collection("items")
           .doc(cartItems[i].code + "$itemNumber")
           .set({
-        "name": cartItems[i].name,
+        "code": cartItems[i].code,
         "Sellprice": cartItems[i].sellprice,
         "Buyprice": cartItems[i].buyprice,
         "Quntity": cartItems[i].Quntity,

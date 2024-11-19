@@ -552,28 +552,46 @@ class _addProductState extends State<addProduct> {
                         }
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          buyPriceAfterExchange = 0.0;
                           setState(() {
                             _isAdding = true;
                           });
                           if (_image == null) {
-                            await Database().addProducts(
-                                name,
-                                double.parse(sellprice),
-                                double.parse(buyprice),
-                                code,
-                                _DefaultImageUrl);
+                            if (_SelectedValue == "USD") {
+                              await Database().addProducts(
+                                  name,
+                                  double.parse(sellprice),
+                                  buyPriceAfterExchange,
+                                  code,
+                                  _DefaultImageUrl);
+                            } else {
+                              await Database().addProducts(
+                                  name,
+                                  double.parse(sellprice),
+                                  double.parse(buyprice),
+                                  code,
+                                  _DefaultImageUrl);
+                            }
                           } else {
-                            await Database().UploadImage(
-                                _image!,
-                                name,
-                                double.parse(sellprice),
-                                double.parse(buyprice),
-                                code);
+                            if (_SelectedValue == "USD") {
+                              await Database().UploadImage(
+                                  _image!,
+                                  name,
+                                  double.parse(sellprice),
+                                  buyPriceAfterExchange,
+                                  code);
+                            } else {
+                              await Database().UploadImage(
+                                  _image!,
+                                  name,
+                                  double.parse(sellprice),
+                                  double.parse(buyprice),
+                                  code);
+                            }
                           }
                           setState(() {
                             _image = null;
                             _isAdding = false;
+                            buyPriceAfterExchange = 0.0;
                           });
                           _formKey.currentState!.reset();
                           ScaffoldMessenger.of(context).showSnackBar(

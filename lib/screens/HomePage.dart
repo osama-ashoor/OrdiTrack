@@ -26,6 +26,30 @@ class _HomeState extends State<HomePage> {
     currencyExchangeTRY = await Database().getCurrencyExchangeTRY();
   }
 
+  List<String> clothSizes = [
+    "XXXL",
+    "XXL",
+    "XL",
+    "L",
+    "M",
+    "S",
+    "XS",
+    "Standard"
+  ];
+  List<String> shoesSizes = [
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+    "46"
+  ];
   String _SelectedValue = "TRY";
   double currencyExchangeUSA = 0.0;
   double currencyExchangeTRY = 0.0;
@@ -709,6 +733,14 @@ class _HomeState extends State<HomePage> {
                                                                   value
                                                                       .isEmpty) {
                                                                 return 'Please enter product size';
+                                                              }
+                                                              if (clothSizes.contains(
+                                                                          value) ==
+                                                                      false &&
+                                                                  shoesSizes.contains(
+                                                                          value) ==
+                                                                      false) {
+                                                                return 'Please enter a valid size';
                                                               }
                                                               return null;
                                                             },

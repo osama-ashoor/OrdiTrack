@@ -241,7 +241,7 @@ class _orderInfoState extends State<orderInfo> {
                               itemCount: items.length,
                               itemBuilder: (context, index) {
                                 DocumentSnapshot item = items[index];
-                                String namee = item.get('name').toString();
+                                String code = item.get('code').toString();
                                 String quantityy =
                                     item.get('Quntity').toString();
                                 String sellPricee =
@@ -281,7 +281,7 @@ class _orderInfoState extends State<orderInfo> {
                                             MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            namee,
+                                            code,
                                             style: GoogleFonts.bebasNeue(
                                                 fontSize: 18),
                                           ),
