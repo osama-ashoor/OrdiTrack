@@ -145,7 +145,7 @@ class Search extends SearchDelegate {
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  product['name'],
+                                  product['code'],
                                   style: GoogleFonts.bebasNeue(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -308,7 +308,7 @@ class Search extends SearchDelegate {
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    product['name'],
+                                    product['code'],
                                     style: GoogleFonts.bebasNeue(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
