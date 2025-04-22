@@ -46,7 +46,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBJH6zpYEpt4Nq5E8hjlvX87iTjlI4pYIA',
     appId: '1:184873604977:ios:895af177e84477c91448d0',
     messagingSenderId: '184873604977',
     projectId: 'b2b-store-9f4f1',
@@ -55,7 +54,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: "AIzaSyAbJznCX0fnxI0JwLff26Uc3adEZJyY84o",
     authDomain: "b2b-store-9f4f1.firebaseapp.com",
     projectId: "b2b-store-9f4f1",
     storageBucket: "b2b-store-9f4f1.appspot.com",
